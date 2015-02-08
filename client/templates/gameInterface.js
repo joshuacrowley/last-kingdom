@@ -10,9 +10,9 @@ Template.gameInterface.helpers({
 Template.gameInterface.events({
 	'submit form': function (event, template) {
 		event.preventDefault();
-		var bushelsToFeed = event.target.bushelsToFeed.value;
-		var seedOrder = event.target.seedOrder.value;
-		var acresOrder = event.target.acresOrder.value;
-		Meteor.call("nextYear", Meteor.user().profile.currentGame, Meteor.userId(), acresOrder, bushelsToFeed, seedOrder);
+		var bushelsToFeed = parseInt(event.target.bushelsToFeed.value,10);
+		var seedOrder = parseInt(event.target.seedOrder.value,10);
+		var acresOrder = parseInt(event.target.acresOrder.value,10);
+		Meteor.call("nextCommands", Meteor.user().profile.currentGame, Meteor.userId(), acresOrder, bushelsToFeed, seedOrder);
 	}
 });

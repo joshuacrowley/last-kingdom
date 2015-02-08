@@ -8,6 +8,9 @@ In active development.
 
 ##To Do
 
-- Add Job queue system 
-- Keep form values as numbers 
-- Add game logic 
+- Test game logic
+– System to progress next year once all moves are in
+– Scoreboard
+– Train Soliders
+– Get Tributes
+
