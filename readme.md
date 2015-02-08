@@ -8,6 +8,6 @@ In active development.
 
 ##To Do
 
-Add Job queue system 
-Keep form values as numbers 
-Add game logic 
+- Add Job queue system 
+- Keep form values as numbers 
+- Add game logic 
