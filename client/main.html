@@ -1,0 +1,59 @@
+<template name="menu">
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="section">
+				<div class="section-heading">
+					<h3>Last Kingdoms</h3>
+					{{> loginButtons}}
+
+					{{#if currentUser}}
+						{{> createGame}}
+					{{/if}}
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</template>
+
+<template name="createGame">
+	<div class="row">
+  		<button id="createGame">Create Game</button>
+  	</div>	
+</template>
+
+<template name="game">
+	<div class="row">
+		<div class="section">
+			<div class="section-heading">
+
+					{{#if currentUser}}
+
+						{{#if validPlayer}}
+
+							{{#if gameStarted}}
+
+								{{> gameInterface}}
+
+								{{else}}
+  									<button id="startGame">Start Game with {{playerCount}}</button>
+  							{{/if}}
+
+  							{{else}}
+  								<button id="joinGame">Join Game with {{playerCount}}</button>
+  						{{/if}}	
+
+
+  						{{else}}
+	  						<h3>Last Kingdoms</h3>
+								<p>You need to join/login first</p>
+							{{> loginButtons}}
+  					{{/if}}
+
+  			</div>
+  		</div>
+  	</div>	
+</template>
