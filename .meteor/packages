@@ -10,6 +10,5 @@ insecure
 accounts-password
 random
 accounts-ui
-ecwyne:polymer-elements
 iron:router
 skeleton:skeleton

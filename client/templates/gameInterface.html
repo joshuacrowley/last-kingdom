@@ -1,5 +1,62 @@
 <template name="gameInterface">
-	<div class="row">
-  		<p>How good is this game {{woot}}</p>
-  	</div>	
+
+		{{#with kingdom}}
+
+		<div class="row">
+			<h5>Year {{year}}</h5>
+		</div>
+
+		<div class="row">
+			<pre><code>{{advice}}</code></pre>
+  		</div>
+
+		<div class="row">
+			<table class="u-full-width">
+	  			<thead>
+	    			<tr>
+	    				<th>Key</th>
+	    				<th>Value</th>
+	    			</tr>
+	    		</thead>
+	  			<tbody>
+	 				<tr>
+		  				<td>Newcomers</td>
+		  				<td>{{newcomers}}</td>		  				
+	 				</tr>
+	 				<tr>
+		  				<td>Population</td>
+		  				<td>{{population}}</td>
+	 				</tr>
+	 				<tr>
+		  				<td>Bushels</td>
+		  				<td>{{bushels}}</td>		  			
+	 				</tr>
+	 				<tr>
+		  				<td>Arces</td>
+		  				<td>{{acres}}</td>		  			
+	 				</tr>
+	 			</tbody>
+	 		</table>
+ 		</div>
+
+		
+
+		<form>
+			 <div class="row">
+      				<label for="exampleEmailInput">How many Bushels to feed?</label>
+      				<input type="number" placeholder="0 Bushels" id="bushelsToFeed">
+    		</div>
+    		<div class="row">
+      				<label for="exampleEmailInput">How many Acres to seed?</label>
+      				<input type="number" placeholder="1 Bushels = 1 seeded" id="seedOrder">
+    		</div>
+  			<div class="row">
+      				<label for="exampleEmailInput">Acres are worth {{price}} Bushels</label>
+      				<input type="number" placeholder="Buy 0 Arces" id="acresOrder">
+    		</div>
+    		<input class="button-primary" type="submit" value="Command">
+    	</form>
+
+    	{{/with}}
+
 </template>
