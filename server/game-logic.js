@@ -1,4 +1,4 @@
-function createKingdom(gameToken){
+createKingdom = function(gameToken){
 
 	var players = Games.findOne({"gameToken": gameToken}).players;
 	var price = _.random(1,10) + 16;
@@ -93,7 +93,7 @@ function calculateStarvedPeople(population, feed) {
    (20 * number of acres you have + amount of grain you have in storage) / (100 * population) + 1*/
 
 function calculateNewcomers(acres, bushels, population) {
-	return (20 * acres + bushels) / (100 * population) + 1;
+	return Math.floor((20 * acres + bushels) / (100 * population) + 1);
 }
 
 /* The function returns true if more than 45% of the
@@ -117,40 +117,37 @@ function tooManyPeopleStarved(population, starved, newcomers) {
    Otherwise the end-page is shown which informs the user
    about his performance. */
 
-function nextYear(gameToken){
+nextYear = function(gameToken){
 
 	var players = Games.findOne({"gameToken": gameToken}).players;
 	var price = _.random(1,10) + 16;
 
 	players.forEach(function (player) {
 
-		var latestAdvice;
-		var population;
+		var latestAdvice = "";
 
 		var commands = Kingdoms.findOne({
 			"gameToken" : gameToken,
 			monarch : player,
 		});
 
-		if (plague()) {
-		latestAdvice = "A horrible plague occured! Half of your population died. ";
-			population = Math.floor(commands.population / 2);
-		}else{
-			population = commands.population - starved + newcomers;
-		};
-
+		var	population = population - starved + newcomers;
 		var starved = calculateStarvedPeople(commands.population, commands.nextFeed);
 		var totalStarved = commands.totalStarved + starved;
 		var newcomers = calculateNewcomers(commands.acres, commands.bushels, commands.population);
-			population = population - starved + newcomers;
 		var harvest = harvestPerAcre();
-		var bushels = commands.bushels + harvest * command.nextSeed;
-		var rats = bushelsEatenByRats(command.bushels);
+		var bushels = commands.bushels + harvest * commands.nextSeed;
+		var rats = bushelsEatenByRats(commands.bushels);
 		var bushels = bushels - rats;
 		var acres = commands.acres + commands.nextAcres;
 		var bushels = bushels - commands.nextAcres * commands.price
 
-		latestAdvice += "My lord, I beg to inform you: ";
+		if (plague()) {
+			latestAdvice = "A horrible plague occured! Half of your population died. ";
+			population = Math.floor(commands.population / 2);
+		};
+
+		latestAdvice += "My lord, I beg to inform you: you had a harvet of " + (harvest * commands.nextSeed) + " bushels. " + starved + " of the population starved. The rats ate " + rats + " bushels from our stockpile.";
 
 		Kingdoms.update({_id : commands._id},{
 			$set:{
