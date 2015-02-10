@@ -8,7 +8,7 @@ createKingdom = function(gameToken){
 		Kingdoms.insert({
 			"gameToken" : gameToken,
 			monarch : player,
-			advice : "Everyone dies",
+			advice : "My Lord, what is your command?",
 			year : 1,
 			starved : 0,
 			newcomers : 5,
@@ -18,10 +18,13 @@ createKingdom = function(gameToken){
 			harvest : 3,
 			rats : 200,
 			price : price,
+			solidersPrice : price * 3,
 			nextAcres : 0,
 			nextFeed : 0,
 			nextSeed : 0,
-			totalStarved: 0
+			nextSoliders: 0,
+			totalStarved: 0,
+			soliders: 10
 		});
 
 		console.log("kingdom created for " + player);
@@ -131,7 +134,7 @@ nextYear = function(gameToken){
 			monarch : player,
 		});
 
-		var	population = population - starved + newcomers;
+		
 		var starved = calculateStarvedPeople(commands.population, commands.nextFeed);
 		var totalStarved = commands.totalStarved + starved;
 		var newcomers = calculateNewcomers(commands.acres, commands.bushels, commands.population);
@@ -140,14 +143,16 @@ nextYear = function(gameToken){
 		var rats = bushelsEatenByRats(commands.bushels);
 		var bushels = bushels - rats;
 		var acres = commands.acres + commands.nextAcres;
-		var bushels = bushels - commands.nextAcres * commands.price
+		var bushels = bushels - (commands.nextAcres * commands.price) - (commands.nextSoliders * commands.solidersPrice) 
+		var	population = commands.population - starved + newcomers;
+		var	soliders = commands.nextSoliders + commands.soliders;
 
 		if (plague()) {
-			latestAdvice = "A horrible plague occured! Half of your population died. ";
+			latestAdvice = "A horrible plague occured! Half of our population died. ";
 			population = Math.floor(commands.population / 2);
 		};
 
-		latestAdvice += "My lord, I beg to inform you: you had a harvet of " + (harvest * commands.nextSeed) + " bushels. " + starved + " of the population starved. The rats ate " + rats + " bushels from our stockpile.";
+		latestAdvice += "My lord, I beg to inform you: we've harvested " + (harvest * commands.nextSeed) + " bushels. " + starved + " of the population starved. The rats ate " + rats + " bushels from our stockpile.";
 
 		Kingdoms.update({_id : commands._id},{
 			$set:{
@@ -161,10 +166,13 @@ nextYear = function(gameToken){
 				"harvest" : harvest,
 				"rats" : 200,
 				"price" : price,
+				"solidersPrice" : price * 3,
 				"nextAcres" : 0,
 				"nextFeed" : 0,
 				"nextSeed" : 0,
-				"totalStarved": totalStarved
+				"nextSoliders" : 0,
+				"totalStarved": totalStarved,
+				"soliders" : soliders
 		}});
 
 		console.log("kingdom updated for " + player);

@@ -14,15 +14,11 @@
 			<table class="u-full-width">
 	  			<thead>
 	    			<tr>
-	    				<th>Key</th>
-	    				<th>Value</th>
+	    				<th>Unit</th>
+	    				<th>Total</th>
 	    			</tr>
 	    		</thead>
 	  			<tbody>
-	 				<tr>
-		  				<td>Newcomers</td>
-		  				<td>{{newcomers}}</td>		  				
-	 				</tr>
 	 				<tr>
 		  				<td>Population</td>
 		  				<td>{{population}}</td>
@@ -34,6 +30,10 @@
 	 				<tr>
 		  				<td>Arces</td>
 		  				<td>{{acres}}</td>		  			
+	 				</tr>
+	 				<tr>
+		  				<td>Soliders</td>
+		  				<td>{{soliders}}</td>		  			
 	 				</tr>
 	 			</tbody>
 	 		</table>
@@ -51,12 +51,67 @@
       				<input type="number" placeholder="1 Bushels = 1 seeded" value="0"  id="seedOrder">
     		</div>
   			<div class="row">
-      				<label for="exampleEmailInput">Acres are worth {{price}} Bushels</label>
+      				<label for="exampleEmailInput">Buy or sell acres @ {{price}} Bushels</label>
       				<input type="number" placeholder="Buy 0 Arces" value="0" id="acresOrder">
     		</div>
+    		<div class="row">
+      				<label for="exampleEmailInput">Train soliders @ {{solidersPrice}} Bushels</label>
+      				<input type="number" placeholder="" value="0" id="solidersTrain">
+    		</div>
+    		 <div class="row">
+      				<label for="exampleEmailInput">War with...</label>
+      					<select>
+
+      						{{#each player}}
+      						<option value="No man">No man</option>
+
+      							{{> players}}
+
+      						{{/each}}
+							  
+
+						</select>
+    		</div>
+
+
     		<input class="button-primary" type="submit" value="Command">
     	</form>
 
     	{{/with}}
 
+    	{{> scoreboard}}
+
 </template>
+
+<template name="players">
+	<option value={{this}}>{{this}}</option>
+</template>
+
+<template name="score">
+	<tr>
+		<td>{{monarch}}</td>
+		<td>{{population}}</td>		  			
+	</tr>
+</template>
+
+<template name="scoreboard">
+			<h3>Scoreboard</h3>
+			<div class="row">
+			<table class="u-full-width">
+	  			<thead>
+	    			<tr>
+	    				<th>Monarch</th>
+	    				<th>Population</th>
+	    			</tr>
+	    		</thead>
+	  			<tbody>
+	  				{{#each board}}
+
+	  					{{> score}}
+
+	  				{{/each}}
+
+	  			</tbody>
+	 		</table>
+ 		</div>
+</template>	  				

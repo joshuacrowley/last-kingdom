@@ -9,7 +9,7 @@ Meteor.methods({
 		createKingdom(gameToken);
 	},
 
-	nextCommands: function(gameToken, player, acres, feed, seed){
+	nextCommands: function(gameToken, player, acres, feed, seed, soliders){
 
 		Kingdoms.update({
 			"gameToken": gameToken,
@@ -18,7 +18,8 @@ Meteor.methods({
 			{ $set: {
 				nextAcres : acres,
 				nextFeed : feed,
-				nextSeed : seed
+				nextSeed : seed,
+				nextSoliders : soliders
 			}
 		});
 
