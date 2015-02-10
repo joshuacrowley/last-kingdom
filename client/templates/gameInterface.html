@@ -25,7 +25,7 @@
 	 				</tr>
 	 				<tr>
 		  				<td>Bushels</td>
-		  				<td>{{bushels}}</td>		  			
+		  				<td>{{budget}}</td>		  			
 	 				</tr>
 	 				<tr>
 		  				<td>Arces</td>
@@ -38,8 +38,6 @@
 	 			</tbody>
 	 		</table>
  		</div>
-
-		
 
 		<form>
 			 <div class="row">
@@ -60,15 +58,14 @@
     		</div>
     		 <div class="row">
       				<label for="exampleEmailInput">War with...</label>
-      					<select>
+      					<select id="war">
 
       						{{#each player}}
       						<option value="No man">No man</option>
 
       							{{> players}}
 
-      						{{/each}}
-							  
+      						{{/each}}				  
 
 						</select>
     		</div>

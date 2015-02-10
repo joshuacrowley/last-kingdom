@@ -144,7 +144,7 @@ nextYear = function(gameToken){
 		var bushels = bushels - rats;
 		var acres = commands.acres + commands.nextAcres;
 		var bushels = bushels - (commands.nextAcres * commands.price) - (commands.nextSoliders * commands.solidersPrice) 
-		var	population = commands.population - starved + newcomers;
+		var	population = Math.floor(commands.population - starved + newcomers);
 		var	soliders = commands.nextSoliders + commands.soliders;
 
 		if (plague()) {
