@@ -22,6 +22,7 @@ Template.scoreboard.helpers({
     board: function(){
 
     	var scoreboard = []
+        var monarchName;
 
     	var players = Games.findOne({
 			gameToken: Meteor.user().profile.currentGame,
@@ -34,10 +35,16 @@ Template.scoreboard.helpers({
         	monarch : player
         });
 
-        var score = {monarch : king.monarch, population : king.population}
+        if (king.monarch === Meteor.userId()){
+            monarchName = "You";
+        } else {
+            monarchName = king.monarch;
+        }
+
+        var score = {monarch : monarchName, population : king.population, turnMade : king.turnMade}
 
         scoreboard.push(score);
-
+        
     	});
 
     	return scoreboard;

@@ -4,11 +4,15 @@
 		<div class="row">
 			<div class="section">
 				<div class="section-heading">
-					<h3>Last Kingdoms</h3>
+					<h3 id="fade">Last Kingdoms</h3>
 					{{> loginButtons}}
 
 					{{#if currentUser}}
 						{{> createGame}}
+
+						<h5>Open Games</h5>
+						{{> openGames}}
+
 					{{/if}}
 				</div>
 			</div>
@@ -22,6 +26,24 @@
   		<button id="createGame">Create Game</button>
   	</div>	
 </template>
+
+<template name="openGames">
+	<div class="row">
+		{{#each game}}
+
+			{{> openGamesButton}}
+
+		{{/each}}
+  		
+  	</div>	
+</template>
+
+<template name="openGamesButton">
+
+	<a href="/games/{{gameToken}}"><button id="game">{{gameToken}} with {{players}}</button></a>
+
+</template>
+
 
 <template name="game">
 	<div class="row">

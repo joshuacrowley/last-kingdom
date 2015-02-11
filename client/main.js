@@ -1,3 +1,11 @@
+  Template.openGames.helpers({
+
+    game: function(){
+      return Games.find({started : false}).fetch();
+    }
+
+  });
+
   Template.game.helpers({
     playerCount: function () {
       var playerCount = Games.findOne({"gameToken" : Meteor.user().profile.currentGame}).players.length;

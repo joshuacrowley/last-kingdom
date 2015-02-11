@@ -16,6 +16,7 @@ Meteor.methods({
 			 "monarch": player
 			},
 			{ $set: {
+				turnMade : "Yes",
 				nextAcres : acres,
 				nextFeed : feed,
 				nextSeed : seed,
@@ -23,7 +24,19 @@ Meteor.methods({
 			}
 		});
 
-		nextYear(gameToken);
-	}
+		var turnsMade = Kingdoms.find({"gameToken": gameToken, turnMade : "Yes" }).fetch();
+		var players = Games.findOne({"gameToken": gameToken}).players;
+
+		if (players.length === turnsMade.length){
+			
+			console.log("Turn made");
+			nextYear(gameToken);
+
+		}else{
+			console.log("Still waiting on other players");
+		}
+
+		
+	},
 
 });

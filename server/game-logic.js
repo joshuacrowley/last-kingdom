@@ -6,6 +6,7 @@ createKingdom = function(gameToken){
 	players.forEach(function (player) {
 		
 		Kingdoms.insert({
+			"turnMade" : "Not yet",
 			"gameToken" : gameToken,
 			monarch : player,
 			advice : "My Lord, what is your command?",
@@ -123,6 +124,9 @@ function tooManyPeopleStarved(population, starved, newcomers) {
 nextYear = function(gameToken){
 
 	var players = Games.findOne({"gameToken": gameToken}).players;
+
+
+
 	var price = _.random(1,10) + 16;
 
 	players.forEach(function (player) {
@@ -156,6 +160,7 @@ nextYear = function(gameToken){
 
 		Kingdoms.update({_id : commands._id},{
 			$set:{
+				"turnMade" : "Not yet",
 				"advice" : latestAdvice,
 				"year" : commands.year + 1,
 				"starved" : starved,
