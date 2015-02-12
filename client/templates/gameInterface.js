@@ -15,6 +15,17 @@ Template.gameInterface.helpers({
         	gameToken: Meteor.user().profile.currentGame,
         	monarch : Meteor.userId()
         }).bushels - Session.get("bushelsToFeed") - Session.get("seedOrder") - Session.get("acresOrder") - Session.get("solidersTrain");
+    },
+    gameNotOver: function(){
+        var Kingdom = Kingdoms.findOne({
+            gameToken: Meteor.user().profile.currentGame,
+            monarch : Meteor.userId()
+        });
+        if (Kingdom.turnMade === "Kingdom collapsed"){
+            return false;
+        }else{
+            return true;
+        }
     }
 });
 
@@ -63,8 +74,8 @@ Template.gameInterface.events({
 		var bushelsToFeed = parseInt(event.target.bushelsToFeed.value,10);
 		var seedOrder = parseInt(event.target.seedOrder.value,10);
 		var acresOrder = parseInt(event.target.acresOrder.value,10);
-		var solidersTrain = parseInt(event.target.solidersTrain.value,10);
-		var war = event.target.war.value;
+		var solidersTrain = 0; //parseInt(event.target.solidersTrain.value,10);
+		var war = "No man";//event.target.war.value;
 
 		var totalBushels = bushelsToFeed + seedOrder + (acresOrder * prices.price) + (solidersTrain * prices.solidersPrice);
 
@@ -106,8 +117,8 @@ Template.gameInterface.events({
         	gameToken: Meteor.user().profile.currentGame,
         	monarch : Meteor.userId()
         });
-		var solidersTrain = parseInt(event.currentTarget.value,10);
-		var solidersTrain = solidersTrain * prices.solidersPrice;
+		//var solidersTrain = parseInt(event.currentTarget.value,10);
+		var solidersTrain = 0 * prices.solidersPrice;
 		Session.set("solidersTrain", solidersTrain);
 	},
 

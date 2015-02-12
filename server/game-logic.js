@@ -156,11 +156,18 @@ nextYear = function(gameToken){
 			population = Math.floor(commands.population / 2);
 		};
 
+		if((starved/commands.population)>.40){
+			console.log("game over");
+			var turnMade = "Kingdom collapsed";
+		}else{
+			var turnMade = "Not yet";
+		}
+
 		latestAdvice += "My lord, I beg to inform you: we've harvested " + (harvest * commands.nextSeed) + " bushels. " + starved + " of the population starved. The rats ate " + rats + " bushels from our stockpile.";
 
 		Kingdoms.update({_id : commands._id},{
 			$set:{
-				"turnMade" : "Not yet",
+				"turnMade" : turnMade,
 				"advice" : latestAdvice,
 				"year" : commands.year + 1,
 				"starved" : starved,

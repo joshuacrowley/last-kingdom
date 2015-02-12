@@ -24,7 +24,7 @@ Meteor.methods({
 			}
 		});
 
-		var turnsMade = Kingdoms.find({"gameToken": gameToken, turnMade : "Yes" }).fetch();
+		var turnsMade = Kingdoms.find({"gameToken": gameToken, turnMade : {$ne: "Not yet"} }).fetch();
 		var players = Games.findOne({"gameToken": gameToken}).players;
 
 		if (players.length === turnsMade.length){
