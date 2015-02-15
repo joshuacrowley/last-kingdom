@@ -7,6 +7,7 @@ Meteor.methods({
 	startGame: function(gameToken){
 		Games.update({"gameToken" : gameToken}, {$set:{started : true}});
 		createKingdom(gameToken);
+		updateGameVars(gameToken);
 	},
 
 	nextCommands: function(gameToken, player, acres, feed, seed, soliders){
@@ -31,11 +32,11 @@ Meteor.methods({
 			
 			console.log("Turn made");
 			nextYear(gameToken);
+			updateGameVars(gameToken);
 
 		}else{
 			console.log("Still waiting on other players");
 		}
-
 		
 	},
 

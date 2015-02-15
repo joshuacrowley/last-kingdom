@@ -5,6 +5,19 @@ Template.gameInterface.helpers({
         	monarch : Meteor.userId()
         });
       },
+
+    year1 : function(){
+        var year =  Kingdoms.findOne({
+            gameToken: Meteor.user().profile.currentGame,
+            monarch : Meteor.userId()
+        }).year
+
+        if (year === 1){
+            return true;
+        }else{
+            return false;
+        };
+    },
     player: function(){
     	return Games.findOne({
 			gameToken: Meteor.user().profile.currentGame,
@@ -65,7 +78,7 @@ Template.scoreboard.helpers({
 Template.gameInterface.events({
 	'submit form': function (event, template) {
 
-		var prices = Kingdoms.findOne({
+		var kingdom = Kingdoms.findOne({
         	gameToken: Meteor.user().profile.currentGame,
         	monarch : Meteor.userId()
         });
@@ -77,12 +90,17 @@ Template.gameInterface.events({
 		var solidersTrain = 0; //parseInt(event.target.solidersTrain.value,10);
 		var war = "No man";//event.target.war.value;
 
-		var totalBushels = bushelsToFeed + seedOrder + (acresOrder * prices.price) + (solidersTrain * prices.solidersPrice);
+		var totalBushels = bushelsToFeed + seedOrder + (acresOrder * kingdom.price) + (solidersTrain * kingdom.solidersPrice);
 
 		var kingdom = Kingdoms.findOne({
         	gameToken: Meteor.user().profile.currentGame,
         	monarch : Meteor.userId()
         });
+
+        if (seedOrder > (kingdom.acres + acresOrder)){
+            alert("But my lord, you don't have that many acres to seed");
+            return;
+        }
 
 		if (totalBushels <= kingdom.bushels){
 

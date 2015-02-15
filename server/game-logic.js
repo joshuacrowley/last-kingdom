@@ -1,9 +1,42 @@
+
+updateGameVars = function(gameToken){
+
+	Games.update({"gameToken" : gameToken},
+
+	{$set:
+
+		{ 	price : _.random(1,10) + 16,
+			harvest : _.random(1,8),
+			hunger : _.random(18,22)
+		}
+
+	})
+
+	var game = Games.findOne({"gameToken": gameToken});
+
+	game.players.forEach(function (player) {
+
+		Kingdoms.update({"gameToken" : gameToken, monarch : player},
+		{$set:
+			{
+			harvest : game.harvest,
+			price : game.price,
+			solidersPrice : game.price * 3,
+			hunger : game.hunger
+		}});
+
+		console.log("game vars updated for " + player);
+	
+	});
+
+};
+
+
 createKingdom = function(gameToken){
 
-	var players = Games.findOne({"gameToken": gameToken}).players;
-	var price = _.random(1,10) + 16;
+	var game = Games.findOne({"gameToken": gameToken});
 
-	players.forEach(function (player) {
+	game.players.forEach(function (player) {
 		
 		Kingdoms.insert({
 			"turnMade" : "Not yet",
@@ -16,10 +49,7 @@ createKingdom = function(gameToken){
 			population : 100,
 			acres : 1000,
 			bushels : 2800,
-			harvest : 3,
-			rats : 200,
-			price : price,
-			solidersPrice : price * 3,
+			rats : 200,			
 			nextAcres : 0,
 			nextFeed : 0,
 			nextSeed : 0,
@@ -81,8 +111,8 @@ function harvestPerAcre() {
    the number of bushels which were used to feed
    people. */
 
-function calculateStarvedPeople(population, feed) {
-	var numberPeopleStarved = (population - feed/ 20);
+function calculateStarvedPeople(population, feed, hunger) {
+	var numberPeopleStarved = (population - feed/hunger);
 	if (numberPeopleStarved <= 0) {
 		return 0;
 	} else {
@@ -123,13 +153,9 @@ function tooManyPeopleStarved(population, starved, newcomers) {
 
 nextYear = function(gameToken){
 
-	var players = Games.findOne({"gameToken": gameToken}).players;
+	var game = Games.findOne({"gameToken": gameToken});
 
-
-
-	var price = _.random(1,10) + 16;
-
-	players.forEach(function (player) {
+	game.players.forEach(function (player) {
 
 		var latestAdvice = "";
 
@@ -139,11 +165,10 @@ nextYear = function(gameToken){
 		});
 
 		
-		var starved = calculateStarvedPeople(commands.population, commands.nextFeed);
+		var starved = calculateStarvedPeople(commands.population, commands.nextFeed, commands.hunger);
 		var totalStarved = commands.totalStarved + starved;
 		var newcomers = calculateNewcomers(commands.acres, commands.bushels, commands.population);
-		var harvest = harvestPerAcre();
-		var bushels = commands.bushels + harvest * commands.nextSeed;
+		var bushels = commands.bushels + game.harvest * commands.nextSeed;
 		var rats = bushelsEatenByRats(commands.bushels);
 		var bushels = bushels - rats;
 		var acres = commands.acres + commands.nextAcres;
@@ -163,7 +188,7 @@ nextYear = function(gameToken){
 			var turnMade = "Not yet";
 		}
 
-		latestAdvice += "My lord, I beg to inform you: we've harvested " + (harvest * commands.nextSeed) + " bushels. " + starved + " of the population starved. The rats ate " + rats + " bushels from our stockpile.";
+		latestAdvice += "My lord, I beg to inform you: we've harvested " + (game.harvest * commands.nextSeed) + " bushels. " + starved + " of the population starved. The rats ate " + rats + " bushels from our stockpile.";
 
 		Kingdoms.update({_id : commands._id},{
 			$set:{
@@ -175,10 +200,7 @@ nextYear = function(gameToken){
 				"population" : population,
 				"acres" : acres,
 				"bushels" : bushels,
-				"harvest" : harvest,
 				"rats" : 200,
-				"price" : price,
-				"solidersPrice" : price * 3,
 				"nextAcres" : 0,
 				"nextFeed" : 0,
 				"nextSeed" : 0,

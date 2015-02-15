@@ -2,11 +2,21 @@
 
 		{{#with kingdom}}
 
-		<div class="row">
-			<h5>Year {{year}}</h5>
-		</div>
+		<p style="text-align: right; padding-bottom: 70px;">In the {{year}} year of our lord</p>
+
+		<p>My Lord, I write to inform you:</p>
 
 		{{#if gameNotOver}}
+
+		<p>As per your guidance, last year we harvested {{bushels}} bushels. {{starved}} of the population starved. The Orcales sacrificed {{rats}} bushels. Our total population has grown to {{population}} souls.</p>
+
+		<p>We’ve started the year with {{budget}} Bushels. We advise that we send <a href="#" id="food">{{hunger}}</a> Bushels to keep the population from starving. We'll buy <a href="#" id="land">no land</a> while the price is {{price}} Bushels. We advise that we seed <a href="#" id="seed">8000</a> arces of our {{acres}} arces. We have a stock pile of {{budget}} Bushels for next year.</p>
+
+		<p>As always, we suggest that we maintain peacful relations with the following Kingdoms.</p>
+
+		<p>I’ve yet to hear word that our rivals have. Do the commands please you my lord? We shall make it your will, commands forthwith.</p>
+
+		<!--
 
 		<div class="row">
 			<p>{{advice}}</p>
@@ -23,7 +33,7 @@
 	  			<tbody>
 	 				<tr>
 		  				<td>Population</td>
-		  				<td>{{population}}</td>
+		  				<td>	</td>
 	 				</tr>
 	 				<tr>
 		  				<td>Bushels</td>
@@ -33,12 +43,12 @@
 		  				<td>Arces</td>
 		  				<td>{{acres}}</td>		  			
 	 				</tr>
-	 				<!--
+	 
 	 				<tr>
 		  				<td>Soliders</td>
 		  				<td>{{soliders}}</td>		  			
 	 				</tr>
-	 			-->
+	 			
 	 			</tbody>
 	 		</table>
  		</div>
@@ -46,6 +56,14 @@
 		<form>
 			 <div class="row">
       				<label for="exampleEmailInput">How many Bushels to feed?</label>
+
+      				{{#if year1}} 
+      					<em>Our oracles say the population needs {{hunger}} Bushels each this year, or they'll starve.</em>
+      					{{else}}
+
+      					<em>Our oracles don't have any info on this matter this year. The gods are unkind.</em>
+
+      				{{/if}}
       				<input type="number" placeholder="0 Bushels" value="0"  id="bushelsToFeed">
     		</div>
     		<div class="row">
@@ -56,7 +74,7 @@
       				<label for="exampleEmailInput">Buy or sell acres @ {{price}} Bushels</label>
       				<input type="number" placeholder="Buy 0 Arces" value="0" id="acresOrder">
     		</div>
-    		<!--
+    		
     		<div class="row">
       				<label for="exampleEmailInput">Train soliders @ {{solidersPrice}} Bushels</label>
       				<input type="number" placeholder="" value="0" id="solidersTrain">
@@ -74,10 +92,12 @@
 
 						</select>
     		</div>
--->
+
 
     		<input class="button-primary" type="submit" value="Command">
     	</form>
+
+-->
 
     	{{else}}
 
@@ -87,7 +107,11 @@
 
     	{{/with}}
 
+    	<!--
+
     	{{> scoreboard}}
+
+    -->
 
 </template>
 
